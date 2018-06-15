@@ -10,5 +10,9 @@ module Events
       @object_reference_id = params[:object_reference_id]
       @payload = params[:payload]
     end
+
+    def handler
+      raise NotImplementedError, 'derrived classes must implement #handler'
+    end
   end
 end

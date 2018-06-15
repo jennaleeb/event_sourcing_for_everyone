@@ -1,4 +1,5 @@
 class Account < ApplicationRecord
+  include Domain::BaseObject
 
   validates :plan_tier, inclusion: { in: ['free', 'paid', 'advanced'] }
 
@@ -11,7 +12,7 @@ class Account < ApplicationRecord
 
   def register(params = {})
     raise ArgumentError unless params[:email].present?
-    account_registered(
+    apply(
       Events::Account::Registered.new(
         payload: {
           is_active: true,
@@ -26,7 +27,7 @@ class Account < ApplicationRecord
       raise ArgumentError, 'illegal plan transition'
     end
 
-    plan_changed(
+    apply(
       Events::Account::PlanChanged.new(
         payload: {
           old_plan: self.plan_tier,
@@ -37,7 +38,7 @@ class Account < ApplicationRecord
   end
 
   def disable(reason:)
-    account_disabled(
+    apply(
       Events::Account::Disabled.new(
         payload: {
           is_active: false,
@@ -46,8 +47,6 @@ class Account < ApplicationRecord
       )
     )
   end
-
-  private
 
   def account_registered(event)
     self.is_active = event.payload[:is_active]
