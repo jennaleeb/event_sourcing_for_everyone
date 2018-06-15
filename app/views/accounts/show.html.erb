@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @account.email %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @account.is_active %>
+</p>
+
+<p>
+  <strong>Plan tier:</strong>
+  <%= @account.plan_tier %>
+</p>
+
+<%= link_to 'Edit', edit_account_path(@account) %> |
+<%= link_to 'Back', accounts_path %>

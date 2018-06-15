@@ -1,0 +1,12 @@
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: some-email@mail.com
+  is_active: false
+  plan_tier: free
+
+two:
+  email: some-email@mail.com
+  is_active: false
+  plan_tier: free
