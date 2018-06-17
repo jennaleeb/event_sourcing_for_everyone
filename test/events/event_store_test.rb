@@ -11,8 +11,7 @@ class EventStoreTest < ActiveSupport::TestCase
   end
 
   test 'stores events in event stream' do
-    account = Domain::AccountObject.new
-    account.register(email: 'some-email@mail.com')
+    account = register_account_command
     assert_equal 1, EventStore.event_streams[account.uuid].length
     assert_equal ({
       is_active: true,
@@ -20,7 +19,7 @@ class EventStoreTest < ActiveSupport::TestCase
     }), EventStore.event_streams[account.uuid].first.payload
 
     account = EventStore.load(Domain::AccountObject, account.uuid)
-    account.disable(reason: 'some reason')
+    disable_command(account)
 
     assert_equal 2, EventStore.event_streams[account.uuid].length
     assert_equal ({
@@ -30,16 +29,14 @@ class EventStoreTest < ActiveSupport::TestCase
   end
 
   test 'different objects different event streams' do
-    account = Domain::AccountObject.new
-    account.register(email: 'some-email@mail.com')
+    account = register_account_command
     assert_equal 1, EventStore.event_streams[account.uuid].length
     assert_equal ({
       is_active: true,
       email: 'some-email@mail.com'
     }), EventStore.event_streams[account.uuid].first.payload
 
-    another_account = Domain::AccountObject.new
-    another_account.register(email: 'another_email@mail.com')
+    another_account = register_account_command(email: 'another_email@mail.com')
     assert_equal 1, EventStore.event_streams[another_account.uuid].length
     assert_equal ({
       is_active: true,
@@ -48,10 +45,9 @@ class EventStoreTest < ActiveSupport::TestCase
   end
 
   test 'load recreates from events' do
-    account = Domain::AccountObject.new
-    account.register(email: 'some-email@mail.com')
-    account.change_plan(new_plan_tier: 'paid')
-    account.disable(reason: 'some reason')
+    account = register_account_command(email: 'another_email@mail.com')
+    change_plan_command(account)
+    disable_command(account)
 
     account = EventStore.load(Domain::AccountObject, account.uuid)
 
