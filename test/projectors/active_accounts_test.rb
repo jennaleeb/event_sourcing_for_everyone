@@ -8,16 +8,15 @@ class ActiveAccountsTest < ActiveSupport::TestCase
   end
 
   test "active_accounts projector adds to active" do
-    account = EventStore.load(Domain::AccountObject)
-    account.register(email: 'some-email@mail.com')
-    account.register(email: 'some-email@mail.com')
+    register_account_command
+    register_account_command
+
 
     assert_equal 2, Projectors::ActiveAccounts.active_accounts_count_report[:active]
   end
 
   test "active_accounts does not get incremented when objects are rebuilt" do
-    account = EventStore.load(Domain::AccountObject)
-    account.register(email: 'some-email@mail.com')
+    account = register_account_command
 
     assert_equal 1, Projectors::ActiveAccounts.active_accounts_count_report[:active]
 

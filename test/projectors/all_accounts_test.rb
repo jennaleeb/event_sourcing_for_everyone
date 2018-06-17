@@ -21,9 +21,8 @@ class AllAccountsTest < ActiveSupport::TestCase
   end
 
   test "projector can be rebuilt from events" do
-    account = Domain::AccountObject.new
-    account.register(email: 'some_email@mail.com')
-    account.change_plan(new_plan_tier: 'paid')
+    account = register_account_command
+    change_plan_command(account)
 
     assert_equal 2, EventStore.event_streams[account.uuid].length
     assert_equal 1, Account.count

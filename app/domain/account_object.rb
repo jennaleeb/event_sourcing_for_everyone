@@ -10,53 +10,6 @@ module Domain
       payment_required: 'Payment required',
     }
 
-
-    def register(params = {})
-      raise ArgumentError unless params[:email].present?
-      apply(
-        Events::Account::Registered.new(
-          object_reference_id: self.uuid,
-          object_type: self.class,
-          payload: {
-            is_active: true,
-            email: params[:email]
-          }
-        )
-      )
-    end
-
-    def change_plan(new_plan_tier:)
-      raise ArgumentError unless VALID_PLANS.include?(new_plan_tier)
-
-      if self.plan_tier == 'free' && new_plan_tier == 'advanced'
-        raise ArgumentError, 'illegal plan transition'
-      end
-
-      apply(
-        Events::Account::PlanChanged.new(
-          object_reference_id: self.uuid,
-          object_type: self.class.to_s,
-          payload: {
-            old_plan: self.plan_tier,
-            new_plan: new_plan_tier
-          }
-        )
-      )
-    end
-
-    def disable(reason:)
-      apply(
-        Events::Account::Disabled.new(
-          object_reference_id: self.uuid,
-          object_type: self.class.to_s,
-          payload: {
-            is_active: false,
-            reason: reason
-          }
-        )
-      )
-    end
-
     def account_registered(event)
       self.is_active = event.payload[:is_active]
       self.email = event.payload[:email]
@@ -73,5 +26,4 @@ module Domain
       end
     end
   end
-
 end
