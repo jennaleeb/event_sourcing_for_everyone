@@ -7,9 +7,8 @@ module Domain
     end
 
     def apply(event, is_new_event: true)
-      handler = event.handler
-      handler.handle(self, event)
-      persist_events(event) if is_new_event
+      handle(event)
+      publish(event, is_new_event)
     end
 
     def rebuild(events)
@@ -18,20 +17,17 @@ module Domain
       end
     end
 
-    def dirty_events
-      @dirty_events ||= []
-    end
-
     private
 
-    def persist_events(event)
-      dirty_events.push(event)
-      EventStore.save(self)
-      clear_dirty_events
+    def handle(event)
+      handler = event.handler
+      if self.respond_to? handler
+        public_send(handler, event)
+      end
     end
 
-    def clear_dirty_events
-      @dirty_events = []
+    def publish(event, is_new_event)
+      EventStore.save(event) if is_new_event
     end
   end
 end

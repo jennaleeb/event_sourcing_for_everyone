@@ -1,11 +1,12 @@
 
 module Events
   class BaseEvent
-    attr_accessor :timestamp
-    attr_reader :payload
+    attr_reader :payload, :object_reference_id, :object_type, :timestamp
 
-    def initialize(params={})
-      self.timestamp = Time.now.utc
+    def initialize(params = {})
+      @timestamp = Time.now.utc
+      @object_reference_id = params[:object_reference_id]
+      @object_type = params[:object_type]
       @payload = params[:payload]
     end
 

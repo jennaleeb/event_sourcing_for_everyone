@@ -14,6 +14,8 @@ class Account < ApplicationRecord
     raise ArgumentError unless params[:email].present?
     apply(
       Events::Account::Registered.new(
+        object_reference_id: self.uuid,
+        object_type: self.class,
         payload: {
           is_active: true,
           email: params[:email]
@@ -29,6 +31,8 @@ class Account < ApplicationRecord
 
     apply(
       Events::Account::PlanChanged.new(
+        object_reference_id: self.uuid,
+        object_type: self.class.to_s,
         payload: {
           old_plan: self.plan_tier,
           new_plan: new_plan_tier
@@ -40,6 +44,8 @@ class Account < ApplicationRecord
   def disable(reason:)
     apply(
       Events::Account::Disabled.new(
+        object_reference_id: self.uuid,
+        object_type: self.class.to_s,
         payload: {
           is_active: false,
           reason: reason
