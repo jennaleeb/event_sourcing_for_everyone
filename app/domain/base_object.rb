@@ -28,6 +28,11 @@ module Domain
 
     def publish(event, is_new_event)
       EventStore.save(event) if is_new_event
+      notify_subscribers(event, is_new_event)
+    end
+
+    def notify_subscribers(event, is_new_event)
+      SubscriberManager.notify_subscribers(event, is_new_event)
     end
   end
 end

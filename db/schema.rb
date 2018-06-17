@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_15_182230) do
+ActiveRecord::Schema.define(version: 2018_06_17_132123) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "email"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2018_06_15_182230) do
     t.string "plan_tier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uuid"
   end
 
 end
