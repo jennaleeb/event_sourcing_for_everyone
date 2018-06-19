@@ -7,6 +7,7 @@ class SubscriberManager
 
   ALL_SUBSCRIBERS = [
     Projectors::AllAccounts,
-    Projectors::ActiveAccounts
+    Projectors::ActiveAccounts,
+    Reactors::DisabledAccountEmailSender
   ]
 end

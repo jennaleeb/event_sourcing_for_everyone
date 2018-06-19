@@ -21,9 +21,6 @@ module Domain
 
     def account_disabled(event)
       self.is_active = event.payload[:is_active]
-      if event.payload[:reason] == DISABLED_REASONS[:manually_disabled]
-        SendSorryToSeeYouGoEmailJob.perform_later(uuid)
-      end
     end
   end
 end
