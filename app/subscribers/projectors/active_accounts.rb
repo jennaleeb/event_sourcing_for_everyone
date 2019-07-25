@@ -1,9 +1,9 @@
 module Projectors
-  class ActiveAccounts
+  class ActiveAccounts < Subscribers::BaseSubscriber
     cattr_accessor :active_accounts_count_report
     @@active_accounts_count_report = {active: 0, inactive: 0}
 
-    def process(event, is_new_event)
+    def process
       return unless is_new_event
       projector = projector(event)
       send(projector, event) if projector

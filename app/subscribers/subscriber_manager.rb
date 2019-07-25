@@ -1,7 +1,7 @@
 class SubscriberManager
   def self.notify_subscribers(event, is_new_event)
     ALL_SUBSCRIBERS.each do |subscriber|
-      subscriber.new.process(event, is_new_event)
+      subscriber.new(event, is_new_event).process
     end
   end
 

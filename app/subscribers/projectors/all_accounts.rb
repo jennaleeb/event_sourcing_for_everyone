@@ -1,6 +1,6 @@
 module Projectors
-  class AllAccounts
-    def process(event, is_new_event)
+  class AllAccounts < Subscribers::BaseSubscriber
+    def process
       projector = projector(event)
       send(projector, event) if projector
     end
