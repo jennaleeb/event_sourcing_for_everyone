@@ -38,7 +38,6 @@ Checkout each branch and compare it to the previous one to learn about:
 ### Blogs/slides
 
 **Intro**
-- This repo! https://github.com/jennaleeb/event_sourcing_for_everyone/blob/master/paris_rb_slides.pdf
 - https://dev.to/barryosull/event-sourcing-what-it-is-and-why-its-awesome
 - http://oierud.net/bliki/EventSourcingInRuby.html
 - https://www.sitepoint.com/rails-disco-get-event-sourcing/
@@ -59,3 +58,4 @@ Checkout each branch and compare it to the previous one to learn about:
 - https://breadcrumbscollector.tech/implementing-event-sourcing-in-python-part-1-aggregates/
 - https://resources.sei.cmu.edu/asset_files/Presentation/2017_017_001_497589.pdf
 - https://cqrs.files.wordpress.com/2010/11/cqrs_documents.pdf
+- https://railseventstore.org/docs/gdpr/
