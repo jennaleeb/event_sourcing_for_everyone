@@ -31,7 +31,7 @@ Checkout each branch and compare it to the previous one to learn about:
 ### Example apps
 - https://github.com/mpraglowski/cqrses-sample
 - https://blog.arkency.com/2015/05/building-an-event-sourced-application-using-rails-event-store/
-- https://github.com/mpraglowski/cqrs-es-sample-with-res
+- https://github.com/RailsEventStore/cqrs-es-sample-with-res
 - https://gist.github.com/mottalrd/52a99a0a67275013df5a66281a4a1b11
 - https://github.com/methodmissing/aftermath
 
